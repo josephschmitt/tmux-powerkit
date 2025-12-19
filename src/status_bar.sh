@@ -34,25 +34,25 @@ create_session_segment() {
     # Priority: prefix > copy_mode > normal
     local bg_condition="#{?client_prefix,${prefix_bg},#{?pane_in_mode,${copy_bg},${normal_bg}}}"
 
-    # Handle transparency for separator
-    # The separator needs to transition from session to first window's index background
-    local first_window_index_bg_option=$(get_tmux_option "@powerkit_active_window_number_bg" "$POWERKIT_DEFAULT_ACTIVE_WINDOW_NUMBER_BG")
-    local first_window_index_bg=$(get_powerkit_color "$first_window_index_bg_option")
-    local inactive_window_index_bg_option=$(get_tmux_option "@powerkit_inactive_window_number_bg" "$POWERKIT_DEFAULT_INACTIVE_WINDOW_NUMBER_BG")
-    local inactive_window_index_bg=$(get_powerkit_color "$inactive_window_index_bg_option")
+    # Check if spacing is enabled
+    local elements_spacing=$(get_tmux_option "@powerkit_elements_spacing" "$POWERKIT_DEFAULT_ELEMENTS_SPACING")
+    local session_output="#[fg=${text_color},bold,bg=${bg_condition}]${session_icon} #S "
 
-    # Use conditional to determine if window 1 is active
-    local next_bg="#{?#{==:#{active_window_index},1},${first_window_index_bg},${inactive_window_index_bg}}"
+    if [[ "$elements_spacing" == "both" || "$elements_spacing" == "windows" ]]; then
+        # Spacing is enabled: add spacing segment after session
+        local spacing_bg
+        if [[ "$transparent" == "true" ]]; then
+            spacing_bg="default"
+        else
+            spacing_bg=$(get_powerkit_color 'surface')
+        fi
 
-    local separator_end
-    if [[ "$transparent" == "true" ]]; then
-        separator_end="#[bg=default]#[fg=${bg_condition}]${separator_char}#[none]"
-    else
-        separator_end="#[bg=${next_bg}]#[fg=${bg_condition}]${separator_char}#[none]"
+        # Close session + spacing gap
+        # The first window will add its own separator from spacing_bg
+        session_output+="#[fg=${bg_condition},bg=${spacing_bg}]${separator_char}#[bg=${spacing_bg}]"
     fi
 
-    # Final segment with dynamic background (icon stays the same, only color changes)
-    echo "#[fg=${text_color},bold,bg=${bg_condition}]${session_icon} #S "
+    echo "$session_output"
 }
 
 # Build status left format

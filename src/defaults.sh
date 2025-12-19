@@ -122,6 +122,8 @@ POWERKIT_DEFAULT_RIGHT_SEPARATOR=$'\ue0b2'
 POWERKIT_DEFAULT_RIGHT_SEPARATOR_INVERSE=$'\ue0b3'
 POWERKIT_DEFAULT_LEFT_SEPARATOR_ROUNDED=$'\ue0b6'
 POWERKIT_DEFAULT_RIGHT_SEPARATOR_ROUNDED=$'\ue0b4'
+# Options: false, both, plugins, windows
+POWERKIT_DEFAULT_ELEMENTS_SPACING="false"
 
 # =============================================================================
 # SESSION & WINDOW

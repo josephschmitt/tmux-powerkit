@@ -245,9 +245,19 @@ declare -A THEME_COLORS=(
 
 **Plugin Types:**
 
-- `static` - Always visible, content doesn't change colors based on value
-- `dynamic` - Content can trigger threshold colors (warning/error)
-- `conditional` - Can be hidden based on conditions (e.g., battery when full)
+- `static` - Always visible, no automatic threshold colors
+  - Examples: datetime, hostname, uptime, packages, audiodevices, volume
+  - Use when: Plugin shows static/informational data that doesn't need color changes
+
+- `dynamic` - Always visible, automatic threshold colors applied when colors are empty
+  - Examples: cpu, memory, disk
+  - Use when: Plugin shows numeric values where higher = worse, and should automatically turn red/yellow
+  - System applies thresholds if `plugin_get_display_info()` returns empty colors
+
+- `conditional` - Can be hidden based on conditions, no automatic thresholds
+  - Examples: network (hidden when no activity), battery (hidden when full), git (hidden when not in repo)
+  - Use when: Plugin may not always be relevant and should hide itself
+  - Can implement custom threshold logic if needed (battery, temperature, fan, gpu, loadavg)
 
 **Example Plugin:**
 
@@ -298,6 +308,7 @@ All options use `@powerkit_*` prefix:
 
 # Separators
 @powerkit_separator_style    # rounded (pill) or normal (arrows)
+@powerkit_elements_spacing   # false (default), both, windows, plugins - adds visual gaps between elements
 @powerkit_left_separator
 @powerkit_right_separator
 
@@ -372,18 +383,28 @@ This allows:
 Plugins can handle threshold colors in two ways:
 
 **Automatic Thresholds** (managed by `render_plugins.sh`):
-- Plugin returns **empty** colors in `plugin_get_display_info()` (or doesn't implement it)
+- Plugin type must be `dynamic` AND return **empty** colors in `plugin_get_display_info()`
 - System automatically applies warning/critical colors based on `WARNING_THRESHOLD` and `CRITICAL_THRESHOLD`
-- Uses normal logic: higher values = worse (e.g., CPU, memory, temperature)
-- Example: CPU plugin doesn't implement `plugin_get_display_info()`, system applies red when CPU > 90%
+- Uses normal logic: higher values = worse (e.g., CPU, memory, disk)
+- Only plugins: cpu, memory, disk (as of now)
+- Example: CPU plugin is type `dynamic` and returns empty colors, system applies red when CPU > 90%
 
 **Custom Threshold Logic** (managed by plugin):
 - Plugin returns **explicit colors** in `plugin_get_display_info()`
 - System respects plugin's colors and skips automatic thresholds
 - Plugin can implement inverted logic (lower = worse) or any custom logic
-- Example: Battery plugin returns red/yellow colors for low battery, system doesn't override them
+- Examples:
+  - Battery plugin (type `conditional`): returns red/yellow colors for low battery
+  - Temperature plugin (type `conditional`): implements Celsius/Fahrenheit-aware thresholds
+  - Loadavg plugin (type `static`): implements CPU core-aware threshold logic
+  - Fan/GPU plugins (type `conditional`): use `apply_threshold_colors()` helper
 
-This generic rule allows plugins to choose their threshold behavior without hardcoded plugin lists.
+**No Thresholds** (informational plugins):
+- Plugin type is `static` or `conditional` and returns empty colors
+- System does NOT apply automatic thresholds (respects plugin's intent)
+- Examples: network, datetime, hostname, weather, git
+
+This type-based rule ensures plugins don't need to defensively provide colors to avoid unwanted threshold behavior.
 
 ### Cache Key Format
 

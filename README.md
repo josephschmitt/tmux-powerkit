@@ -122,6 +122,26 @@ set -g @powerkit_theme_variant 'light'
 
 Learn more: **[Theme Variations](../../wiki/Theme-Variations)**
 
+## 🎨 Customization
+
+### Visual Style
+
+```bash
+# Separator style (rounded pill or normal powerline arrows)
+set -g @powerkit_separator_style 'rounded'
+
+# Element spacing (add visual gaps between elements)
+set -g @powerkit_elements_spacing 'false'    # No spacing (default)
+set -g @powerkit_elements_spacing 'both'     # Spacing between windows AND plugins
+set -g @powerkit_elements_spacing 'windows'  # Spacing only between windows
+set -g @powerkit_elements_spacing 'plugins'  # Spacing only between plugins
+
+# Transparent background
+set -g @powerkit_transparent 'true'
+```
+
+Learn more: **[Global Configuration](../../wiki/Global-Configuration)**
+
 ## ⌨️ Interactive Features
 
 All interactive keybindings use `Ctrl` modifier (`prefix + Ctrl+key`) for cross-platform compatibility.

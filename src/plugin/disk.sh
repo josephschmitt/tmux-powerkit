@@ -35,7 +35,7 @@ _compute_disk() {
     get_disk_info "$_mount" "$_format"
 }
 
-plugin_get_type() { printf 'static'; }
+plugin_get_type() { printf 'dynamic'; }
 
 plugin_get_display_info() {
     local content="${1:-}"

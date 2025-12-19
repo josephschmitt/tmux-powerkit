@@ -39,7 +39,7 @@ get_cpu_macos() {
     printf '%s' "${cpu:-0}"
 }
 
-plugin_get_type() { printf 'static'; }
+plugin_get_type() { printf 'dynamic'; }
 
 plugin_get_display_info() {
     local content="${1:-}"

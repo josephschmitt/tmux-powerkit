@@ -39,7 +39,7 @@ THEME_FILE="${CURRENT_DIR}/themes/${THEME_NAME}/${THEME_VARIANT}.sh"
 # =============================================================================
 # Use theme's white color for plugin text (ensures contrast on colored backgrounds)
 TEXT_COLOR="${RENDER_TEXT_COLOR:-$(get_color 'white')}"
-TEXT_COLOR="${TEXT_COLOR:-#ffffff}"  # Fallback if theme doesn't define white
+TEXT_COLOR="${TEXT_COLOR:-#ffffff}" # Fallback if theme doesn't define white
 STATUS_BG="${RENDER_STATUS_BG:-${POWERKIT_FALLBACK_STATUS_BG:-#1a1b26}}"
 TRANSPARENT="${RENDER_TRANSPARENT:-false}"
 PLUGINS_CONFIG="${1:-}"
@@ -76,7 +76,10 @@ apply_thresholds() {
     # Extract first numeric value using bash regex (performance: avoids grep fork)
     local num=""
     [[ "$content" =~ ([0-9]+) ]] && num="${BASH_REMATCH[1]}"
-    [[ -z "$num" ]] && { printf '%s:%s:0' "$accent" "$accent_icon"; return; }
+    [[ -z "$num" ]] && {
+        printf '%s:%s:0' "$accent" "$accent_icon"
+        return
+    }
 
     # Use shared apply_threshold_colors from plugin_helpers.sh
     local result
@@ -104,9 +107,9 @@ _string_hash() {
     local str="$1"
     local hash=0
     local i char
-    for ((i=0; i<${#str}; i++)); do
+    for ((i = 0; i < ${#str}; i++)); do
         char="${str:i:1}"
-        hash=$(( (hash * 31 + $(printf '%d' "'$char")) % 2147483647 ))
+        hash=$(((hash * 31 + $(printf '%d' "'$char")) % 2147483647))
     done
     printf '%s' "$hash"
 }
@@ -136,7 +139,7 @@ _process_external_plugin() {
 
     # Extended parsing with optional name and condition
     local cfg_icon content cfg_accent cfg_accent_icon cfg_ttl cfg_name cfg_condition
-    IFS='|' read -r _ cfg_icon content cfg_accent cfg_accent_icon cfg_ttl cfg_name cfg_condition <<< "$config"
+    IFS='|' read -r _ cfg_icon content cfg_accent cfg_accent_icon cfg_ttl cfg_name cfg_condition <<<"$config"
     [[ -z "$content" ]] && return 1
 
     # Default name for logging/telemetry
@@ -165,7 +168,7 @@ _process_external_plugin() {
     fi
 
     # Record telemetry
-    [[ -n "$start_ts" ]] && declare -f telemetry_plugin_end &>/dev/null && \
+    [[ -n "$start_ts" ]] && declare -f telemetry_plugin_end &>/dev/null &&
         telemetry_plugin_end "$cfg_name" "$start_ts" "$cache_hit"
 
     # Check condition (optional - skip plugin if condition fails)
@@ -206,7 +209,7 @@ _process_external_plugin() {
 _process_internal_plugin() {
     local config="$1"
 
-    IFS=':' read -r name cfg_accent cfg_accent_icon cfg_icon plugin_type <<< "$config"
+    IFS=':' read -r name cfg_accent cfg_accent_icon cfg_icon plugin_type <<<"$config"
 
     local plugin_script="${CURRENT_DIR}/plugin/${name}.sh"
     [[ ! -f "$plugin_script" ]] && return 1
@@ -231,7 +234,7 @@ _process_internal_plugin() {
 
     # Get defaults if not in config
     local def_accent def_accent_icon def_icon
-    IFS=':' read -r def_accent def_accent_icon def_icon <<< "$(get_plugin_defaults "$name")"
+    IFS=':' read -r def_accent def_accent_icon def_icon <<<"$(get_plugin_defaults "$name")"
     [[ -z "$cfg_accent" ]] && cfg_accent="$def_accent"
     [[ -z "$cfg_accent_icon" ]] && cfg_accent_icon="$def_accent_icon"
     [[ -z "$cfg_icon" ]] && cfg_icon="$def_icon"
@@ -243,7 +246,7 @@ _process_internal_plugin() {
     # Check plugin's custom display info
     if declare -f plugin_get_display_info &>/dev/null; then
         local show ov_accent ov_accent_icon ov_icon
-        IFS=':' read -r show ov_accent ov_accent_icon ov_icon <<< "$(plugin_get_display_info "${content,,}")"
+        IFS=':' read -r show ov_accent ov_accent_icon ov_icon <<<"$(plugin_get_display_info "${content,,}")"
         [[ "$show" == "0" ]] && return 1
 
         # Track if plugin provided explicit colors (even if same as defaults)
@@ -255,12 +258,12 @@ _process_internal_plugin() {
         [[ -n "$ov_icon" ]] && cfg_icon="$ov_icon"
     fi
 
-    # Apply thresholds (only if plugin didn't provide colors)
+    # Apply thresholds (only if plugin didn't provide colors AND is dynamic type)
     local has_threshold="0" threshold_flag="0"
-    if [[ "$plugin_provided_colors" == "0" ]]; then
-        # Plugin didn't provide colors, try automatic thresholds
+    if [[ "$plugin_provided_colors" == "0" && "$plugin_type" == "dynamic" ]]; then
+        # Plugin didn't provide colors and is dynamic type, try automatic thresholds
         local tmp_accent tmp_accent_icon
-        IFS=':' read -r tmp_accent tmp_accent_icon threshold_flag <<< "$(apply_thresholds "$name" "$content" "$cfg_accent" "$cfg_accent_icon")"
+        IFS=':' read -r tmp_accent tmp_accent_icon threshold_flag <<<"$(apply_thresholds "$name" "$content" "$cfg_accent" "$cfg_accent_icon")"
         # Only apply if threshold was triggered
         if [[ -n "$tmp_accent" ]]; then
             cfg_accent="$tmp_accent"
@@ -289,7 +292,7 @@ _process_internal_plugin() {
     HAS_THRESHOLDS+=("$has_threshold")
 
     # Record telemetry (note: cache hits are already tracked in cache_get_or_compute)
-    [[ -n "$start_ts" ]] && declare -f telemetry_plugin_end &>/dev/null && \
+    [[ -n "$start_ts" ]] && declare -f telemetry_plugin_end &>/dev/null &&
         telemetry_plugin_end "$name" "$start_ts" "false"
 
     return 0
@@ -301,7 +304,7 @@ _process_internal_plugin() {
 
 declare -a NAMES=() CONTENTS=() ACCENTS=() ACCENT_STRONGS=() ACCENT_ICONS=() ICONS=() HAS_THRESHOLDS=()
 
-IFS=';' read -ra CONFIGS <<< "$PLUGINS_CONFIG"
+IFS=';' read -ra CONFIGS <<<"$PLUGINS_CONFIG"
 
 for config in "${CONFIGS[@]}"; do
     [[ -z "$config" ]] && continue
@@ -320,17 +323,38 @@ done
 total=${#NAMES[@]}
 [[ $total -eq 0 ]] && exit 0
 
+# Check if spacing is enabled
+ELEMENTS_SPACING=$(get_tmux_option "@powerkit_elements_spacing" "$POWERKIT_DEFAULT_ELEMENTS_SPACING")
+
 output=""
 prev_accent=""
 
-for ((i=0; i<total; i++)); do
+for ((i = 0; i < total; i++)); do
     content="${CONTENTS[$i]}"
     accent="${ACCENTS[$i]}"
     accent_strong="${ACCENT_STRONGS[$i]}"
     accent_icon="${ACCENT_ICONS[$i]}"
     icon="${ICONS[$i]}"
     has_threshold="${HAS_THRESHOLDS[$i]}"
-    
+
+    # Add spacing after previous element if enabled
+    if [[ $i -gt 0 && ("$ELEMENTS_SPACING" == "both" || "$ELEMENTS_SPACING" == "plugins") ]]; then
+        # Spacing with proper background color
+        spacing_bg=""
+        spacing_fg=""
+        if [[ "$TRANSPARENT" == "true" ]]; then
+            spacing_bg="default"                 # Transparent background
+            spacing_fg=$(get_color 'background') # Separator needs solid color from theme
+        else
+            spacing_bg=$(get_color 'surface')
+            spacing_fg="$spacing_bg"
+        fi
+
+        # Extend previous plugin color + close it + neutral gap
+        output+=" #[fg=${spacing_fg},bg=${prev_accent}]${RIGHT_SEPARATOR}#[bg=${spacing_bg}]#[none]"
+        prev_accent="$spacing_bg"
+    fi
+
     # Separators (left-facing: fg=new color, bg=previous color)
     if [[ $i -eq 0 ]]; then
         # First plugin separator
@@ -350,7 +374,7 @@ for ((i=0; i<total; i++)); do
     fi
 
     sep_mid="#[fg=${accent},bg=${accent_icon}]${RIGHT_SEPARATOR}#[none]"
-    
+
     # Build output - consistent spacing: " ICON SEP TEXT "
     # Icon text: white for normal state, accent-strong when threshold is triggered
     if [[ "$has_threshold" == "1" ]]; then
@@ -358,7 +382,7 @@ for ((i=0; i<total; i++)); do
     else
         output+="${sep_start}#[fg=${TEXT_COLOR},bg=${accent_icon},bold]${icon} ${sep_mid}"
     fi
-    
+
     # Content text: use accent-strong + bold when threshold is triggered for better visibility
     content_fg="${TEXT_COLOR}"
     content_style=""
@@ -367,12 +391,12 @@ for ((i=0; i<total; i++)); do
         content_style=",bold"
     fi
 
-    if [[ $i -eq $((total-1)) ]]; then
+    if [[ $i -eq $((total - 1)) ]]; then
         output+="#[fg=${content_fg},bg=${accent}${content_style}] ${content} "
     else
         output+="#[fg=${content_fg},bg=${accent}${content_style}] ${content} #[none]"
     fi
-    
+
     prev_accent="$accent"
 done
 

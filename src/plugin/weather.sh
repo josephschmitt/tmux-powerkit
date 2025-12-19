@@ -14,11 +14,11 @@ plugin_get_type() { printf 'conditional'; }
 
 resolve_format() {
     case "$1" in
-        compact)  printf '%s' '%t %c' ;;
-        full)     printf '%s' '%t %c H:%h' ;;
-        minimal)  printf '%s' '%t' ;;
-        detailed) printf '%s' '%l: %t %c' ;;
-        *)        printf '%s' "$1" ;;
+    compact) printf '%s' '%t %c' ;;
+    full) printf '%s' '%t %c H:%h' ;;
+    minimal) printf '%s' '%t' ;;
+    detailed) printf '%s' '%l: %t %c' ;;
+    *) printf '%s' "$1" ;;
     esac
 }
 

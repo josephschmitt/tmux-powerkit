@@ -6,7 +6,7 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 plugin_init "memory"
 
-plugin_get_type() { printf 'static'; }
+plugin_get_type() { printf 'dynamic'; }
 
 plugin_get_display_info() {
     local content="${1:-}"
