@@ -1,3 +1,10 @@
+## [4.1.1](https://github.com/fabioluciano/tmux-powerkit/compare/v4.1.0...v4.1.1) (2025-12-19)
+
+
+### Bug Fixes
+
+* streamline cache handling and improve plugin display logic; add … ([#136](https://github.com/fabioluciano/tmux-powerkit/issues/136)) ([5651ed2](https://github.com/fabioluciano/tmux-powerkit/commit/5651ed269005dfe1182b3b27666cfff77431e74d))
+
 # [4.1.0](https://github.com/fabioluciano/tmux-powerkit/compare/v4.0.4...v4.1.0) (2025-12-18)
 
 
