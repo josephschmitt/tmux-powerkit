@@ -1,3 +1,62 @@
+# [5.0.0](https://github.com/fabioluciano/tmux-powerkit/compare/v4.4.0...v5.0.0) (2025-12-27)
+
+
+* feat!: rewrite to v5 contract-based architecture ([#142](https://github.com/fabioluciano/tmux-powerkit/issues/142)) ([3f36b6f](https://github.com/fabioluciano/tmux-powerkit/commit/3f36b6f7ef3d91130733d785011784916a7db3f9))
+
+
+### BREAKING CHANGES
+
+* Complete architectural overhaul. All plugins, themes,
+and configurations must be updated to the new v5 contract system.
+
+Architecture Changes:
+- Introduce contract-based plugin system with strict separation of concerns
+- Plugins now provide data and semantics only (no UI decisions)
+- Renderer handles all visual presentation (colors, icons, formatting)
+- Themes define colors only (no logic or functions)
+
+New Directory Structure:
+- src/core/       Core framework (bootstrap, lifecycle, cache, options)
+- src/contract/   Contract definitions (plugin, theme, helper, session, window)
+- src/renderer/   Visual rendering (segments, separators, colors)
+- src/plugins/    All 42 plugins migrated to v5 contract
+- src/utils/      Utility functions (platform, strings, numbers, etc.)
+- src/helpers/    Interactive UI helpers
+
+Plugin Contract Changes:
+- Mandatory functions: plugin_collect(), plugin_render(), plugin_get_state(),
+  plugin_get_health(), plugin_get_content_type(), plugin_get_presence()
+- plugin_render() returns TEXT ONLY (no colors, no tmux formatting)
+- Health levels: ok, good, info, warning, error
+- States: inactive, active, degraded, failed
+- Removed: accent_color, plugin_get_display_info(), plugin_get_type()
+
+Theme Contract Changes:
+- 22 required base colors
+- Auto-generated variants (lighter/darker) via color_generator
+- Removed all logic from theme files
+- 24-hour theme color caching
+
+New Features:
+- Multi-layer caching system (memory, render, operation, theme)
+- Cache-before-source optimization for performance
+- macOS native binaries for efficient metrics (temperature, gpu, microphone, nowplaying)
+- Plugin validator for contract compliance checking
+- Template generator for new plugins/helpers/themes
+- Centralized registry for constants and enums
+- Helper contract with UI backend abstraction (gum/fzf)
+
+Plugins:
+- All 42 plugins migrated to v5 contract
+- New plugins: crypto, stocks, iops, pomodoro
+- Renamed: network → netspeed
+- Platform-specific plugins return inactive state on unsupported platforms
+
+Breaking Configuration Changes:
+- Plugin options format: @powerkit_plugin_<name>_<option>
+- Theme format: @powerkit_theme, @powerkit_theme_variant
+- Removed: legacy plugin options, accent_color settings
+
 # [4.4.0](https://github.com/fabioluciano/tmux-powerkit/compare/v4.3.0...v4.4.0) (2025-12-20)
 
 
