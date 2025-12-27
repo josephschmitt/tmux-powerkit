@@ -1,61 +1,40 @@
 #!/usr/bin/env bash
+# =============================================================================
+# Theme: Gruvbox
+# Variant: Light
+# Description: Retro groove color scheme - light variant
+# Source: https://github.com/morhetz/gruvbox
+# =============================================================================
 
-# Gruvbox Light Theme - PowerKit Semantic Color Mapping
-# Based on https://github.com/morhetz/gruvbox
-# Retro groove color scheme - Light variant
+declare -gA THEME_COLORS=(
+    # Status Bar
+    [statusbar-bg]="#ebdbb2"      # fg1 (light bg)
+    [statusbar-fg]="#3c3836"      # bg1 (dark text)
 
-declare -A THEME_COLORS=(
-    # Core System Colors
-    [transparent]="NONE"
-    [none]="NONE"
+    # Session (orange = warm Gruvbox signature)
+    [session-bg]="#af3a03"        # orange faded
+    [session-fg]="#fbf1c7"        # light0
+    [session-prefix-bg]="#b57614" # yellow faded
+    [session-copy-bg]="#076678"   # blue faded
 
-    # Background Colors
-    [background]="#fbf1c7"           # bg0 - Main background
-    [background-alt]="#f9f5d7"       # bg0_h - Lighter background (hard)
-    [surface]="#ebdbb2"              # bg1 - Surface
-    [overlay]="#d5c4a1"              # bg2 - Overlay
+    # Windows (base colors - variants auto-generated)
+    [window-active-base]="#b57614"  # yellow faded
+    [window-inactive-base]="#d5c4a1" # fg2
 
-    # Text Colors
-    [text]="#3c3836"                 # fg1 - Primary text
-    [text-muted]="#665c54"           # gray - Muted text
-    [text-disabled]="#a89984"        # bg3 - Disabled text
+    # Pane Borders
+    [pane-border-active]="#af3a03"  # orange faded
+    [pane-border-inactive]="#d5c4a1" # fg2
 
-    # Border Colors
-    [border]="#d5c4a1"               # bg2 - Default border (inactive window content bg)
-    [border-subtle]="#bdae93"        # bg3 - Subtle border (inactive window index bg - visible on surface)
-    [border-strong]="#7c6f64"        # bg4 - Strong border
+    # Health States (base colors - variants auto-generated)
+    [ok-base]="#665c54"           # bg3
+    [good-base]="#79740e"         # green faded ✓
+    [info-base]="#076678"         # blue faded ✓
+    [warning-base]="#b57614"      # yellow faded ✓
+    [error-base]="#9d0006"        # red faded ✓
+    [disabled-base]="#bdae93"     # fg3
 
-    # Semantic Colors (PowerKit Standard)
-    [accent]="#b57614"               # yellow - Main accent (warm)
-    [primary]="#076678"              # blue - Primary
-    [secondary]="#665c54"            # gray - Secondary (dark for white text)
-    [secondary-strong]="#3c3836"     # fg1 - Strong secondary (darker)
+    # Messages
+    [message-bg]="#ebdbb2"        # fg1
+    [message-fg]="#3c3836"        # bg1
 
-    # Status Colors (PowerKit Standard)
-    [success]="#79740e"              # green
-    [warning]="#b57614"              # yellow (original gruvbox)
-    [error]="#9d0006"                # red
-    [info]="#076678"                 # blue
-
-    # Interactive States
-    [hover]="#ebdbb2"                # bg1 - Hover state
-    [active]="#7c6f64"               # bg4 - Active state (icon bg)
-    [focus]="#d79921"                # bright yellow - Focus state
-    [disabled]="#bdae93"             # bg3 - Disabled state
-
-    # Additional Variants (Faded colors)
-    [success-subtle]="#928e3b"       # Subtle success (18.9% lighter)
-    [success-strong]="#434007"       # Strong success (44.2% darker)
-    [warning-strong]="#6a4a1b"       # Strong warning (44.2% darker)
-    [error-strong]="#570003"         # Strong error (44.2% darker)
-    [info-subtle]="#358291"          # Subtle info (18.9% lighter)
-    [info-strong]="#033842"          # Strong info (44.2% darker)
-    [error-subtle]="#af3035"         # Subtle error (18.9% lighter)
-    [warning-subtle]="#ca9c57"       # Subtle warning (18.9% lighter)
-
-    # System Colors
-    [white]="#ffffff"                # bg0_h (lightest)
-    [black]="#282828"                # fg0 (darkest)
 )
-
-export THEME_COLORS

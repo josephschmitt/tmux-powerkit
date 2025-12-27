@@ -1,61 +1,40 @@
 #!/usr/bin/env bash
+# =============================================================================
+# Theme: Kanagawa
+# Variant: Dragon
+# Description: Darker, more muted variant inspired by Katsushika Hokusai
+# Source: https://github.com/rebelot/kanagawa.nvim
+# =============================================================================
 
-# Kanagawa Dragon Theme - PowerKit Semantic Color Mapping
-# Based on https://github.com/rebelot/kanagawa.nvim
-# Dragon variant - Darker, more muted variant
+declare -gA THEME_COLORS=(
+    # Status Bar
+    [statusbar-bg]="#282727"      # dragonBlack4
+    [statusbar-fg]="#c5c9c5"      # dragonWhite
 
-declare -A THEME_COLORS=(
-  # Core System Colors
-  [transparent]="NONE"
-  [none]="NONE"
+    # Session (dragonViolet = signature muted purple)
+    [session-bg]="#8992a7"        # dragonViolet
+    [session-fg]="#181616"        # dragonBlack3
+    [session-prefix-bg]="#b6927b" # dragonOrange
+    [session-copy-bg]="#8ba4b0"   # dragonBlue2
 
-  # Background Colors (Dragon is darker/inkier)
-  [background]="#181616"           # dragonBlack3 - main background
-  [background-alt]="#0d0c0c"       # dragonBlack0 - darker background
-  [surface]="#282727"              # dragonBlack4 - surface/status bar
-  [overlay]="#393836"              # dragonBlack5 - overlay/modal
+    # Windows (base colors - variants auto-generated)
+    [window-active-base]="#a292a3"  # dragonPink
+    [window-inactive-base]="#393836" # dragonBlack5
 
-  # Text Colors
-  [text]="#c5c9c5"                 # dragonWhite - primary text
-  [text-muted]="#a6a69c"           # dragonGray2 - muted text
-  [text-disabled]="#625e5a"        # dragonGray - disabled text
+    # Pane Borders
+    [pane-border-active]="#8992a7"  # dragonViolet
+    [pane-border-inactive]="#393836" # dragonBlack5
 
-  # Border Colors
-  [border]="#393836"               # dragonBlack5
-  [border-subtle]="#625e5a"        # dragonGray
-  [border-strong]="#a6a69c"        # dragonGray2
+    # Health States (base colors - variants auto-generated)
+    [ok-base]="#282727"           # dragonBlack4
+    [good-base]="#87a987"         # dragonGreen ✓
+    [info-base]="#8ba4b0"         # dragonBlue2 ✓
+    [warning-base]="#c4b28a"      # dragonYellow ✓
+    [error-base]="#c4746e"        # dragonRed ✓
+    [disabled-base]="#625e5a"     # (muted)
 
-  # Semantic Colors (PowerKit Standard)
-  [accent]="#8992a7"               # dragonViolet - main accent
-  [primary]="#8ba4b0"              # dragonBlue2 - primary
-  [secondary]="#223249"            # waveBlue1 - secondary
-  [secondary-strong]="#2D4F67"     # waveBlue2 - strong secondary
+    # Messages
+    [message-bg]="#282727"        # dragonBlack4
+    [message-fg]="#c5c9c5"        # dragonWhite
 
-  # Status Colors
-  [success]="#87a987"              # dragonGreen2
-  [warning]="#c4b28a"              # dragonYellow
-  [error]="#c4746e"                # dragonRed
-  [info]="#8ba4b0"                 # dragonBlue2
-
-  # Interactive States
-  [hover]="#282727"                # dragonBlack4
-  [active]="#2D4F67"               # waveBlue2 - active
-  [focus]="#8ba4b0"                # dragonBlue2
-  [disabled]="#625e5a"             # dragonGray
-
-  # Additional Variants
-  [success-subtle]="#8a9a7b"       # dragonGreen
-  [success-strong]="#2B3328"       # winterGreen
-  [warning-strong]="#49443C"       # winterYellow
-  [error-strong]="#43242B"         # winterRed
-  [info-subtle]="#a6a69c"          # dragonGray2
-  [info-strong]="#252535"          # winterBlue
-  [error-subtle]="#b6927b"         # dragonOrange2
-  [warning-subtle]="#e6c384"       # carpYellow
-
-  # System Colors
-  [white]="#c5c9c5"                # dragonWhite
-  [black]="#0d0c0c"                # dragonBlack0
 )
-
-export THEME_COLORS
