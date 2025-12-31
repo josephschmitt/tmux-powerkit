@@ -2,6 +2,8 @@
 
 # ⚡ PowerKit
 
+![](https://raw.githubusercontent.com/wiki/fabioluciano/tmux-powerkit/assets/images/tmux-powerkit-session-plugins-windows.png)
+
 ## The Ultimate tmux Status Bar Framework
 
 42 Plugins • 13 Themes • Infinite Possibilities
