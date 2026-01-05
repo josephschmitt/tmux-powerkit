@@ -4,8 +4,8 @@
 
 ![PowerKit Status Bar Preview](https://raw.githubusercontent.com/wiki/fabioluciano/tmux-powerkit/assets/images/tmux-powerkit-session-plugins-windows.png)
 
-① <b>Session</b> – Current tmux session name with mode-aware icon (changes on prefix/copy mode) &nbsp;•&nbsp;
-② <b>Plugins</b> – Modular status indicators with health-based colors (cpu, memory, git, datetime, etc.) &nbsp;•&nbsp;
+① <b>Session</b> – Current tmux session name with mode-aware icon (changes on prefix/copy mode)<br />
+② <b>Plugins</b> – Modular status indicators with health-based colors (cpu, memory, git, datetime, etc.)<br />
 ③ <b>Windows</b> – Window list with index icons, names, and state indicators (active, zoomed, activity)
 
 ## The Ultimate tmux Status Bar Framework
