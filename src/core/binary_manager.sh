@@ -62,18 +62,19 @@ _get_powerkit_version() {
         return 0
     fi
 
-    # Fetch from GitHub API
+    # Fetch from GitHub API with proper timeout to avoid hangs
     local version
-    version=$(curl -fsSL "https://api.github.com/repos/${POWERKIT_GITHUB_REPO}/releases/latest" 2>/dev/null \
+    version=$(curl -fsSL --connect-timeout 5 --max-time 10 \
+        "https://api.github.com/repos/${POWERKIT_GITHUB_REPO}/releases/latest" 2>/dev/null \
         | grep '"tag_name"' | head -1 | sed 's/.*"v\([^"]*\)".*/\1/')
 
     if [[ -n "$version" ]]; then
         cache_set "$cache_key" "$version"
         printf '%s' "$version"
     else
-        # Fallback if API fails
-        log_warn "binary_manager" "Failed to fetch latest version from GitHub API"
-        printf '%s' "5.2.0"
+        # Fallback if API fails - use a recent version known to have binaries
+        log_warn "binary_manager" "Failed to fetch latest version from GitHub API, using fallback"
+        printf '%s' "5.10.1"
     fi
 }
 
