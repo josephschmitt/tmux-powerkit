@@ -2,6 +2,12 @@
 
 All notable changes to tmux-powerkit will be documented in this file.
 
+## [5.10.3](https://github.com/fabioluciano/tmux-powerkit/compare/v5.10.2...v5.10.3) (2026-01-10)
+
+### Bug Fixes
+
+* **keybindings:** correct keybindings viewer ([a3a15b7](https://github.com/fabioluciano/tmux-powerkit/commit/a3a15b7593d5285750060cd2ca37c0e17e9e0afa))
+
 ## [5.10.2](https://github.com/fabioluciano/tmux-powerkit/compare/v5.10.1...v5.10.2) (2026-01-10)
 
 ### Bug Fixes
