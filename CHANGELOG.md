@@ -2,6 +2,12 @@
 
 All notable changes to tmux-powerkit will be documented in this file.
 
+## [5.13.0](https://github.com/fabioluciano/tmux-powerkit/compare/v5.12.0...v5.13.0) (2026-01-14)
+
+### Features
+
+* add window index visibility and session mode display options ([376c792](https://github.com/fabioluciano/tmux-powerkit/commit/376c7927868b01661c456db60a0b134080a8906d))
+
 ## [5.12.0](https://github.com/fabioluciano/tmux-powerkit/compare/v5.11.0...v5.12.0) (2026-01-13)
 
 ### Features
