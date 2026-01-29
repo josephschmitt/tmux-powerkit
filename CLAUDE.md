@@ -59,7 +59,7 @@ Mocha is the most popular variant with excellent contrast.
 24. **loadavg** - Load average with cores (uptime)
 25. **memory** - Memory usage with thresholds (vm_stat/free)
 26. **microphone** - Mic mute status (macOS, osascript)
-27. **network** - Upload/download speed (ifstat/netstat)
+27. **netspeed** - Upload/download speed (ifstat/netstat)
 28. **nowplaying** - Current music track (Music/Spotify)
 29. **packages** - Pending updates (brew/apt/yum/pacman)
 30. **ping** - Network latency with thresholds
@@ -79,7 +79,7 @@ Mocha is the most popular variant with excellent contrast.
 ### Plugin Categories
 
 - **System Monitoring** (12): battery, cpu, disk, fan, gpu, iops, loadavg, memory, temperature, uptime, volume, brightness
-- **Network** (7): external_ip, network, ping, vpn, weather, wifi, ssh
+- **Network** (7): external_ip, netspeed, ping, vpn, weather, wifi, ssh
 - **Development** (8): git, github, gitlab, bitbucket, jira, kubernetes, terraform, cloud
 - **Media** (4): nowplaying, audiodevices, camera, microphone
 - **Productivity** (5): datetime, timezones, pomodoro, smartkey, bitwarden

@@ -189,7 +189,7 @@ Stay connected and informed:
 
 | Plugin | Description | Features |
 |--------|-------------|----------|
-| `network` | Upload/download speed | Real-time bandwidth monitoring |
+| `netspeed` | Upload/download speed | Real-time bandwidth monitoring |
 | `wifi` | WiFi SSID + signal strength | Signal quality indicators |
 | `vpn` | VPN connection status | Detects active VPN tunnels |
 | `ping` | Network latency | Configurable host, threshold alerts |
@@ -375,10 +375,10 @@ set -g @powerkit_plugin_git_max_length "30"
 ### Network Speed
 
 ```bash
-set -g @powerkit_plugin_network_interface "auto"  # or eth0, wlan0, etc.
-set -g @powerkit_plugin_network_icon_up "󰕒"
-set -g @powerkit_plugin_network_icon_down "󰇚"
-set -g @powerkit_plugin_network_format "both"  # up, down, both
+set -g @powerkit_plugin_netspeed_interface "auto"  # or eth0, wlan0, etc.
+set -g @powerkit_plugin_netspeed_icon_up "󰕒"
+set -g @powerkit_plugin_netspeed_icon_down "󰇚"
+set -g @powerkit_plugin_netspeed_format "both"  # up, down, both
 ```
 
 ### DateTime Formats
@@ -670,11 +670,11 @@ set -g @powerkit_plugin_kubernetes_show_namespace "true"
 ### System Monitor Setup
 
 ```bash
-set -g @powerkit_plugins "cpu,memory,disk,loadavg,temperature,fan,network,datetime"
+set -g @powerkit_plugins "cpu,memory,disk,loadavg,temperature,fan,netspeed,datetime"
 set -g @powerkit_theme "gruvbox"
 set -g @powerkit_theme_variant "dark"
 set -g @powerkit_plugin_cpu_show_cores "true"
-set -g @powerkit_plugin_network_format "both"
+set -g @powerkit_plugin_netspeed_format "both"
 ```
 
 ### Productivity Setup
