@@ -2,6 +2,12 @@
 
 All notable changes to tmux-powerkit will be documented in this file.
 
+## [5.18.3](https://github.com/fabioluciano/tmux-powerkit/compare/v5.18.2...v5.18.3) (2026-02-14)
+
+### Bug Fixes
+
+* tries to fix the CPU being inaccurate ([#190](https://github.com/fabioluciano/tmux-powerkit/issues/190)) ([8a74640](https://github.com/fabioluciano/tmux-powerkit/commit/8a74640e9f354bb1b695743ccf319fa8341a32d1)), closes [#189](https://github.com/fabioluciano/tmux-powerkit/issues/189) [#184](https://github.com/fabioluciano/tmux-powerkit/issues/184)
+
 ## [5.18.2](https://github.com/fabioluciano/tmux-powerkit/compare/v5.18.1...v5.18.2) (2026-02-10)
 
 ### Bug Fixes
